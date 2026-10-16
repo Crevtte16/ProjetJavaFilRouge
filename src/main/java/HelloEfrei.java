@@ -145,7 +145,7 @@ public class HelloEfrei {
                     case 11 -> {
                         int choixEquipe = -1;
 
-                        while (choixEquipe != 7) {
+                        while (choixEquipe != 8) {
                             System.out.println(" Gestion des équipes ");
                             System.out.println("1. Afficher les équipes");
                             System.out.println("2. Ajouter une équipe");
@@ -153,7 +153,8 @@ public class HelloEfrei {
                             System.out.println("4. Retirer un collaborateur d'une équipe");
                             System.out.println("5. Renommer une équipe");
                             System.out.println("6. Supprimer une équipe");
-                            System.out.println("7. Retour au menu principal");
+                            System.out.println("7. Afficher les collaborateur d'une equipe");
+                            System.out.println("8. Retour au menu principal");
                             System.out.print("Votre choix : ");
 
                             if (scanner.hasNextInt()) {
@@ -267,6 +268,7 @@ public class HelloEfrei {
 
                                     case 8 -> {
                                         System.out.println("Retour au menu principal.");
+                                        afficherMenu();
                                     }
 
 
