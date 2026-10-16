@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 /**
  * Point d'entrée de l'application — Annuaire des collaborateurs.
@@ -19,6 +21,10 @@ public class HelloEfrei {
     public static void main(String[] args) {
 
         logger.info("Demarrage.....");
+        EntityManagerFactory fabrique =
+                Persistence.createEntityManagerFactory("collaborateurs-pu");
+
+        EquipeService equipeService = new EquipeService(fabrique);
 
         // --- Initialisation de l'annuaire avec les données de démonstration ---
         Annuaire annuaire = new Annuaire();
@@ -136,33 +142,75 @@ public class HelloEfrei {
 
 
                         }
-                        case 11 -> {
-                        System.out.println(" 1 - Afficher les equipes : ");
-                        System.out.println("2 - Ajouter un equipe : ");
-                        System.out.println("3 - Ajouter un collaborateur a une equipe : ");
-                        System.out.println("4 - Retirer un collaborateur a une equipe : ");
-                        System.out.println("5 - Renommer une équipe :  ");
-                        System.out.println("6 - Supprimer une equipe : ");
-                        System.out.println("7 - Retour au menu principale : ");
-                        scanner.nextLine();
+                    case 11 -> {
+                        int choixEquipe = -1;
 
-                            int choixEquipe = -1;
+                        while (choixEquipe != 7) {
+                            System.out.println(" Gestion des équipes ");
+                            System.out.println("1. Afficher les équipes");
+                            System.out.println("2. Ajouter une équipe");
+                            System.out.println("3. Affecter un collaborateur à une équipe");
+                            System.out.println("4. Retirer un collaborateur d'une équipe");
+                            System.out.println("5. Renommer une équipe");
+                            System.out.println("6. Supprimer une équipe");
+                            System.out.println("7. Retour au menu principal");
+                            System.out.print("Votre choix : ");
 
-                            while (choixEquipe != 0) {
-                                afficherMenu();
-                                break;
+                            if (scanner.hasNextInt()) {
+                                choixEquipe = scanner.nextInt();
+                                scanner.nextLine();
+
+                                switch (choixEquipe) {
+                                    case 1 -> {
+                                        List<Equipe> equipes =
+                                                equipeService.toutesLesEquipes();
+
+                                        if (equipes.isEmpty()) {
+                                            System.out.println("Aucune équipe enregistrée.");
+                                        } else {
+                                            for (Equipe equipe : equipes) {
+                                                System.out.println(equipe);
+                                            }
+                                        }
+                                    }
+                                    case 2->{
+
+                                    }
+                                    case 3 ->{
+
+
+                                    }
+                                    case 4 ->{
+
+                                    }
+                                    case 5 ->{
+
+                                    }
+                                    case 6 ->{
+
+                                    }
+                                    case 7 -> {
+                                        System.out.println("Retour au menu principal.");
+                                    }
+                                    default -> System.out.println("Choix invalide.");
+                                }
+                            } else {
+                                System.out.println("Veuillez saisir un nombre.");
+                                scanner.nextLine();
                             }
+                        }
                     }
 
-                    default -> System.out.println("Option invalide. Choisissez entre 0 et 11.");
+                    default -> {
+                        System.out.println("Option invalide. Choisissez entre 0 et 11.");
+                    }
                 }
 
             } else {
                 System.out.println("Saisie invalide. Veuillez entrer un nombre.");
                 scanner.nextLine();
             }
-        }
-
+        }fabrique.close();
         scanner.close();
     }
 
@@ -181,8 +229,7 @@ public class HelloEfrei {
         System.out.println("8. Afficher la fiche d'un collaborateur");
         System.out.println("9. Augmenter le salaire d'un collaborateur");
         System.out.println("10. Ajouter un collaborateur");
-        System.out.println("11. Gerer equipe");
-
+        System.out.println("11. Gestion des équipes");
         System.out.println("0. Quitter");
         System.out.print("Votre choix : ");
     }

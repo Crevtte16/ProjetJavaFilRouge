@@ -47,6 +47,10 @@ public abstract class Collaborateur {
     public double getSalaire()     { return salaire; }
     public Adresse getAdresse()    { return adresse; }
 
+    // --- Accesseurs Ajouter pour voir et attribuer une equipe ---
+    public Equipe getEquipe() {return equipe;}
+    public void setEquipe(Equipe equipe) {this.equipe = equipe;}
+
     // --- Comportements ---
 
     /** Augmente le salaire du pourcentage donné. Ignoré si le pourcentage est négatif ou nul. */
