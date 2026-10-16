@@ -175,23 +175,60 @@ public class HelloEfrei {
                                     }
                                     case 2->{
 
+                                        System.out.print("Nom de la nouvelle équipe : ");
+                                        String nom = scanner.nextLine();
+                                        equipeService.ajouterEquipe(nom);
+
                                     }
                                     case 3 ->{
-
+                                        System.out.println("ID du collaborateur a affecter");
+                                        String idAjouter = scanner.nextLine();
+                                        System.out.println("ID du equipe a affecter");
+                                        int idEquipeAffecter = scanner.nextInt();
+                                      //  equipeService.affecterEquipe(Equipe,nom);
 
                                     }
                                     case 4 ->{
 
+                                        System.out.println("Equipe à afficher : ");
+                                        int idEquipeAfiicher = scanner.nextInt();
+                                        //equipeService.afficherEffectifEquipe();
+
+
                                     }
                                     case 5 ->{
+
+                                        System.out.println("ID du collaborateur à retirer");
+                                        String idAjouter = scanner.nextLine();
+                                        //  equipeService.retirerCollaborateurEquipe(nom);
+
+
 
                                     }
                                     case 6 ->{
 
+                                        System.out.print("Id de l'équipe à renommer : ");
+                                        int nomEquipeRemplacer = scanner.nextInt();
+                                        System.out.print("Nouveau Nom d'Equipe : ");
+                                        String nouveauNom = scanner.nextLine();
+                                        //equipeService.ajouterEquipe(nouveauNom);
+
+
                                     }
                                     case 7 -> {
+                                        System.out.println("Entrez L'ID de l'equipe a supprimer :");
+                                        int idEquipeToRemove = scanner.nextInt();
+                                        //equipeService.supprimerEquipe;
+                                    }
+
+
+                                    case 8 -> {
                                         System.out.println("Retour au menu principal.");
                                     }
+
+
+
+                                           // Supprimer une équipe uniquement si elle est vide.
                                     default -> System.out.println("Choix invalide.");
                                 }
                             } else {
