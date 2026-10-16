@@ -180,46 +180,89 @@ public class HelloEfrei {
                                         equipeService.ajouterEquipe(nom);
 
                                     }
-                                    case 3 ->{
-                                        System.out.println("ID du collaborateur a affecter");
-                                        String idAjouter = scanner.nextLine();
-                                        System.out.println("ID du equipe a affecter");
-                                        int idEquipeAffecter = scanner.nextInt();
-                                      //  equipeService.affecterEquipe(Equipe,nom);
+                                    case 3 -> {
+                                        System.out.print("Identifiant du collaborateur a affecter : ");
+                                        String identifiant = scanner.nextLine();
 
+                                        System.out.print("Identifiant de l'équipe a agrandir : ");
+
+                                        if (scanner.hasNextLong()) {
+                                            Long idEquipe = scanner.nextLong();
+                                            scanner.nextLine();
+
+                                            equipeService.affecterCollaborateur(
+                                                    identifiant, idEquipe
+                                            );
+                                        } else {
+                                            System.out.println("Identifiant d'équipe invalide.");
+                                            scanner.nextLine();
+                                        }
                                     }
-                                    case 4 ->{
+                                    case 4 -> {
+                                        System.out.print("Identifiant du collaborateur : ");
+                                        String identifiant = scanner.nextLine();
 
-                                        System.out.println("Equipe à afficher : ");
-                                        int idEquipeAfiicher = scanner.nextInt();
-                                        //equipeService.afficherEffectifEquipe();
+                                        System.out.print("Identifiant de l'équipe : ");
 
+                                        if (scanner.hasNextLong()) {
+                                            Long idEquipe = scanner.nextLong();
+                                            scanner.nextLine();
 
+                                            equipeService.retirerCollaborateur(
+                                                    identifiant, idEquipe
+                                            );
+                                        } else {
+                                            System.out.println("Identifiant d'équipe invalide.");
+                                            scanner.nextLine();
+                                        }
                                     }
-                                    case 5 ->{
+                                    case 5 -> {
+                                        System.out.print("Identifiant de l'équipe à renommer : ");
 
-                                        System.out.println("ID du collaborateur à retirer");
-                                        String idAjouter = scanner.nextLine();
-                                        //  equipeService.retirerCollaborateurEquipe(nom);
+                                        if (scanner.hasNextLong()) {
+                                            Long idEquipe = scanner.nextLong();
+                                            scanner.nextLine();
 
+                                            System.out.print("Nouveau nom de l'équipe : ");
+                                            String nouveauNom = scanner.nextLine();
 
+                                            equipeService.renommerEquipe(idEquipe, nouveauNom);
 
+                                        } else {
+                                            System.out.println("Identifiant invalide.");
+                                            scanner.nextLine();
+                                        }
                                     }
-                                    case 6 ->{
+                                    case 6 -> {
+                                        System.out.print("Identifiant de l'équipe à supprimer : ");
 
-                                        System.out.print("Id de l'équipe à renommer : ");
-                                        int nomEquipeRemplacer = scanner.nextInt();
-                                        System.out.print("Nouveau Nom d'Equipe : ");
-                                        String nouveauNom = scanner.nextLine();
-                                        //equipeService.ajouterEquipe(nouveauNom);
+                                        if (scanner.hasNextLong()) {
+                                            Long idEquipe = scanner.nextLong();
+                                            scanner.nextLine();
 
+                                            equipeService.supprimerEquipe(idEquipe);
 
+                                        } else {
+                                            System.out.println("Identifiant invalide.");
+                                            scanner.nextLine();
+                                        }
                                     }
+
                                     case 7 -> {
-                                        System.out.println("Entrez L'ID de l'equipe a supprimer :");
-                                        int idEquipeToRemove = scanner.nextInt();
-                                        //equipeService.supprimerEquipe;
+                                        System.out.print("Identifiant de l'équipe : ");
+
+                                        if (scanner.hasNextLong()) {
+                                            Long idEquipe = scanner.nextLong();
+                                            scanner.nextLine();
+
+                                            equipeService.afficherMembresEquipe(idEquipe);
+
+                                        } else {
+                                            System.out.println("Identifiant invalide.");
+                                            scanner.nextLine();
+                                        }
                                     }
+
 
 
                                     case 8 -> {
