@@ -1,18 +1,20 @@
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.DiscriminatorValue;
+
 /**
  * Programmeur : collaborateur spécialisé dans le développement logiciel.
  * Implémente Formateur car un programmeur peut animer des formations internes.
- *
- * Reprise du TP2 avec ajout de l'identifiant (délégué à Collaborateur).
- *
  */
-import jakarta.persistence.Entity;
-
 @Entity
+@DiscriminatorValue("Programmeur")
 public class Programmeur extends Collaborateur implements Formateur {
 
     private String langagePrefere;
+
     protected Programmeur() {
     }
+
     public Programmeur(
             String identifiant,
             String prenom,
@@ -24,7 +26,9 @@ public class Programmeur extends Collaborateur implements Formateur {
         this.langagePrefere = langagePrefere;
     }
 
-    public String getLangagePrefere() { return langagePrefere; }
+    public String getLangagePrefere() {
+        return langagePrefere;
+    }
 
     @Override
     public String getMetier() {

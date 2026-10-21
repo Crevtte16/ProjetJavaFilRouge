@@ -26,6 +26,8 @@ public class HelloEfrei {
 
         EquipeService equipeService = new EquipeService(fabrique);
 
+        CollaborateurService collaborateurService = new CollaborateurService(fabrique);
+
         // --- Initialisation de l'annuaire avec les données de démonstration ---
         Annuaire annuaire = new Annuaire();
         for (Collaborateur c : DonneesDemo.creerCollaborateurs()) {
@@ -122,30 +124,38 @@ public class HelloEfrei {
                         Collaborateur nouveau =
                                 new Programmeur(id, prenom, nom, salaire, adresse, "Java");
 
+
                         try {
                             logger.info("Ajout du collaborateur {}", nouveau.getIdentifiant());
-                            annuaire.ajouter(nouveau);
-                            System.out.println("Collaborateur ajouté.");
-                        } catch (CollaborateurDejaExistantException e) {
 
-                            logger.warn("Tentative d'ajout d'un collaborateur déjà existant : {}",
-                                    e.identifiant());
+                            // Vérifier d'abord l'identifiant dans l'annuaire
+                            if (annuaire.trouver(nouveau.getIdentifiant()) != null) {
+                                System.out.println("Erreur : cet identifiant existe déjà.");
+                            } else {
+                                boolean ajouteEnBase = collaborateurService.ajouter(nouveau);
 
-                            logger.error("Impossible d'ajouter le collaborateur {} : identifiant déjà utilisé",
-                                    e.identifiant());
-
-                            System.out.println("Erreur : le collaborateur "
-                                    + e.identifiant()
-                                    + " existe déjà.");
-
+                                if (ajouteEnBase) {
+                                    annuaire.ajouter(nouveau);
+                                    System.out.println("Collaborateur ajouté en base et dans l'annuaire.");
+                                } else {
+                                    System.out.println("Échec de l'ajout en base de données.");
+                                }
                             }
 
-
+                        } catch (CollaborateurDejaExistantException e) {
+                            System.out.println(
+                                    "Erreur : le collaborateur " + e.identifiant()
+                                            + " existe déjà."
+                            );
                         }
+
+
+
+                    }
                     case 11 -> {
                         int choixEquipe = -1;
 
-                        while (choixEquipe != 8) {
+                        while (choixEquipe != 9) {
                             System.out.println(" Gestion des équipes ");
                             System.out.println("1. Afficher les équipes");
                             System.out.println("2. Ajouter une équipe");
@@ -154,7 +164,8 @@ public class HelloEfrei {
                             System.out.println("5. Renommer une équipe");
                             System.out.println("6. Supprimer une équipe");
                             System.out.println("7. Afficher les collaborateur d'une equipe");
-                            System.out.println("8. Retour au menu principal");
+                            System.out.println("8. Afficher les collaborateurs sans équipe");
+                            System.out.println("9. Retour au menu principal");
                             System.out.print("Votre choix : ");
 
                             if (scanner.hasNextInt()) {
@@ -266,10 +277,10 @@ public class HelloEfrei {
 
 
 
-                                    case 8 -> {
-                                        System.out.println("Retour au menu principal.");
-                                        afficherMenu();
-                                    }
+
+                                    case 8 -> equipeService.afficherCollaborateursSansEquipe();
+
+                                    case 9 -> System.out.println("Retour au menu principal.");
 
 
 

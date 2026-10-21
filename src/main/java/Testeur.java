@@ -1,10 +1,20 @@
-/**
- * Testeur : collaborateur spécialisé dans les tests logiciels.
- *
- * Reprise du TP2 avec ajout de l'identifiant (délégué à Collaborateur).
- */
+import jakarta.persistence.Entity;
+import jakarta.persistence.DiscriminatorValue;
+
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.DiscriminatorValue;
+
+@Entity
+@DiscriminatorValue("Testeur")
 public class Testeur extends Collaborateur {
 
+    // Constructeur sans paramètre : utilisé par Hibernate
+    protected Testeur() {
+        super();
+    }
+
+    // Ton constructeur actuel : à conserver
     public Testeur(
             String identifiant,
             String prenom,

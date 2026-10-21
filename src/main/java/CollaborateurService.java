@@ -18,4 +18,36 @@ public class CollaborateurService {
             em.close();
         }
     }
+
+
+    public boolean ajouter(Collaborateur collaborateur) {
+
+        EntityManager em = fabrique.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            em.persist(collaborateur);
+
+            em.getTransaction().commit();
+
+            return true;
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            System.out.println(
+                    "Erreur lors de l'enregistrement en base : "
+                            + e.getMessage()
+            );
+
+            return false;
+
+        } finally {
+            em.close();
+        }
+    }
+
 }

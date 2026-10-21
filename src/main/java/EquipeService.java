@@ -324,5 +324,36 @@ public class EquipeService {
     }
 
 
+    public void afficherCollaborateursSansEquipe() {
+
+        EntityManager em = fabrique.createEntityManager();
+
+        try {
+            List<Collaborateur> collaborateurs = em.createQuery(
+                    "SELECT c FROM Collaborateur c " +
+                            "WHERE c.equipe IS NULL ORDER BY c.nom, c.prenom",
+                    Collaborateur.class
+            ).getResultList();
+
+            if (collaborateurs.isEmpty()) {
+                System.out.println("Tous les collaborateurs ont une équipe.");
+            } else {
+                System.out.println("\n=== Collaborateurs sans équipe ===");
+
+                for (Collaborateur c : collaborateurs) {
+                    System.out.println(
+                            "- " + c.getIdentifiant()
+                                    + " | " + c.getPrenom()
+                                    + " " + c.getNom()
+                    );
+                }
+            }
+
+        } finally {
+            em.close();
+        }
+    }
+
+
 
 }
