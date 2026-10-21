@@ -2,10 +2,7 @@
 import jakarta.persistence.Entity;
 import jakarta.persistence.DiscriminatorValue;
 
-/**
- * Programmeur : collaborateur spécialisé dans le développement logiciel.
- * Implémente Formateur car un programmeur peut animer des formations internes.
- */
+
 @Entity
 @DiscriminatorValue("Programmeur")
 public class Programmeur extends Collaborateur implements Formateur {

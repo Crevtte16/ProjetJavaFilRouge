@@ -36,37 +36,29 @@ public class Annuaire {
         return true;
     }
 
-    /**
-     * Recherche un collaborateur par son identifiant.
-     *
-     * @return le collaborateur trouvé, ou null s'il est absent.
-     */
+
     public Collaborateur trouver(String identifiant) {
         return collaborateurs.get(identifiant);
     }
 
-    /**
-     * Supprime un collaborateur par son identifiant.
-     *
-     * @return true si la suppression a réussi, false si l'identifiant était absent.
-     */
+
     public boolean supprimer(String identifiant) {
         return collaborateurs.remove(identifiant) != null;
     }
 
-    /** Retourne le nombre de collaborateurs dans l'annuaire. */
+
     public int taille() {
         return collaborateurs.size();
     }
 
-    /** Retourne une copie de la liste de tous les collaborateurs (dans l'ordre d'insertion). */
+
     public List<Collaborateur> tous() {
         return new ArrayList<>(collaborateurs.values());
     }
 
     // --- Filtres ---
 
-    /** Retourne la liste des programmeurs uniquement. */
+
     public List<Programmeur> programmeurs() {
         List<Programmeur> liste = new ArrayList<>();
         for (Collaborateur c : collaborateurs.values()) {
@@ -78,7 +70,7 @@ public class Annuaire {
         return liste;
     }
 
-    /** Retourne les collaborateurs dont le nom contient le fragment donné (insensible à la casse). */
+
     public List<Collaborateur> nomContenant(String fragment) {
         List<Collaborateur> liste = new ArrayList<>();
         for (Collaborateur c : collaborateurs.values()) {
@@ -89,7 +81,6 @@ public class Annuaire {
         return liste;
     }
 
-    /** Retourne les collaborateurs dont le salaire est strictement supérieur au seuil. */
     public List<Collaborateur> salaireSuperieurA(double seuil) {
         List<Collaborateur> liste = new ArrayList<>();
         for (Collaborateur c : collaborateurs.values()) {
@@ -100,19 +91,17 @@ public class Annuaire {
         return liste;
     }
 
-    // --- Tris ---
 
-    /** Retourne une liste triée par nom (ordre alphabétique). */
     public List<Collaborateur> triesParNom() {
         return triesSelon(Comparator.comparing(Collaborateur::getNom));
     }
 
-    /** Retourne une liste triée par salaire croissant. */
+
     public List<Collaborateur> triesParSalaire() {
         return triesSelon(Comparator.comparingDouble(Collaborateur::getSalaire));
     }
 
-    /** Retourne une liste triée par nom, puis par prénom en cas d'ex-aequo. */
+
     public List<Collaborateur> triesParNomPuisPrenom() {
         return triesSelon(
             Comparator.comparing(Collaborateur::getNom)
@@ -120,10 +109,7 @@ public class Annuaire {
         );
     }
 
-    /**
-     * Méthode privée mutualisée : crée une copie de la liste, la trie selon
-     * le comparateur donné, et la retourne non modifiable.
-     */
+
     private List<Collaborateur> triesSelon(Comparator<Collaborateur> comparateur) {
         List<Collaborateur> liste = tous();
         liste.sort(comparateur);

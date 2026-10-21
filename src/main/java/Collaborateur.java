@@ -60,16 +60,13 @@ public abstract class Collaborateur {
         }
     }
 
-    /** Chaque sous-classe définit son propre métier (utilisé dans afficherFiche et toString). */
+
     public abstract String getMetier();
 
-    /** Chaque sous-classe définit sa manière de travailler. */
+
     public abstract void travailler();
 
-    /**
-     * Affichage détaillé de la fiche du collaborateur (multiligne).
-     * Les sous-classes peuvent surcharger pour ajouter leurs propres informations.
-     */
+
     public void afficherFiche() {
         System.out.println("[" + identifiant + "] " + prenom + " " + nom);
         System.out.println("Métier  : " + getMetier());
@@ -78,12 +75,7 @@ public abstract class Collaborateur {
         adresse.afficher();
     }
 
-    // --- Contrat equals/hashCode basé sur l'identifiant (TP3) ---
 
-    /**
-     * Deux collaborateurs sont logiquement égaux s'ils partagent le même identifiant.
-     * Cela permet un comportement correct dans les collections (Set, Map, contains...).
-     */
     @Override
     public boolean equals(Object autre) {
         if (this == autre) return true;
@@ -96,7 +88,7 @@ public abstract class Collaborateur {
         return Objects.hash(identifiant);
     }
 
-    /** Représentation compacte sur une ligne (utilisée dans les listes). */
+
     @Override
     public String toString() {
         return String.format("[%s] %s %s (%s) - %.2f €",

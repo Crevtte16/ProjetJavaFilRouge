@@ -5,14 +5,7 @@ import org.slf4j.LoggerFactory;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-/**
- * Point d'entrée de l'application — Annuaire des collaborateurs.
- *
- * Reprend la structure du HelloEfrei du TP1 :
- *   - méthode afficherMenu() statique
- *   - méthodes utilitaires statiques (afficherListe, saisirIdentifiant...)
- *   - boucle principale avec validation hasNextInt() + switch fléché
- */
+
 public class HelloEfrei {
 
     private static final Logger logger =
@@ -284,7 +277,7 @@ public class HelloEfrei {
 
 
 
-                                           // Supprimer une équipe uniquement si elle est vide.
+
                                     default -> System.out.println("Choix invalide.");
                                 }
                             } else {
@@ -327,11 +320,7 @@ public class HelloEfrei {
         System.out.print("Votre choix : ");
     }
 
-    /**
-     * Affiche une liste de collaborateurs.
-     * Utilise List<? extends Collaborateur> pour accepter aussi bien
-     * List<Collaborateur> que List<Programmeur> (covariance via wildcard borné).
-     */
+
     private static void afficherListe(List<? extends Collaborateur> liste) {
         if (liste.isEmpty()) {
             System.out.println("Aucun collaborateur trouvé.");
