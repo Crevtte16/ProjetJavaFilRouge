@@ -11,6 +11,10 @@ public class EquipeService {
         this.fabrique = fabrique;
     }
 
+    // Classes du menu Gestion equipe
+
+    // Afficher les equipes
+
     public List<Equipe> toutesLesEquipes() {
 
         EntityManager em = fabrique.createEntityManager();
@@ -25,7 +29,7 @@ public class EquipeService {
         }
     }
 
-
+    // Ajouter des equipes
     public boolean ajouterEquipe(String nom) {
 
         if (nom == null || nom.isBlank()) {
@@ -39,14 +43,11 @@ public class EquipeService {
             em.getTransaction().begin();
 
             Long nombre = em.createQuery(
-                            "SELECT COUNT(e) FROM Equipe e WHERE LOWER(e.nom) = LOWER(:nom)",
-                            Long.class
-                    ).setParameter("nom", nom.trim())
-                    .getSingleResult();
+                            "SELECT COUNT(e) FROM Equipe e WHERE LOWER(e.nom) = LOWER(:nom)", Long.class).setParameter("nom", nom.trim()).getSingleResult();
 
             if (nombre > 0) {
                 em.getTransaction().rollback();
-                System.out.println("Erreur : une équipe porte déjà ce nom.");
+                System.out.println("Impossible, il y a deja un equipe avec ce nom");
                 return false;
             }
 
@@ -55,7 +56,7 @@ public class EquipeService {
 
             em.getTransaction().commit();
 
-            System.out.println("Équipe ajoutée avec succès.");
+            System.out.println("Équipe ajoutée avec succès!");
             return true;
 
         } catch (Exception e) {
@@ -70,7 +71,7 @@ public class EquipeService {
         }
     }
 
-
+    // affacter un collaboratuer a une  equipe
     public boolean affecterCollaborateur(String identifiant, Long idEquipe) {
 
         EntityManager em = fabrique.createEntityManager();
@@ -85,13 +86,13 @@ public class EquipeService {
 
             if (collaborateur == null) {
                 em.getTransaction().rollback();
-                System.out.println("Erreur : collaborateur introuvable.");
+                System.out.println("Erreur :  ce collaborateur  est introuvable.");
                 return false;
             }
 
             if (equipe == null) {
                 em.getTransaction().rollback();
-                System.out.println("Erreur : équipe introuvable.");
+                System.out.println("Erreur : l'équipe est introuvable.");
                 return false;
             }
 
@@ -107,7 +108,7 @@ public class EquipeService {
 
             em.getTransaction().commit();
 
-            System.out.println("Collaborateur affecté à l'équipe avec succès.");
+            System.out.println("Collaborateur affecter à l'équipe avec succès.");
             return true;
 
         } catch (Exception e) {
@@ -122,6 +123,7 @@ public class EquipeService {
             em.close();
         }
     }
+    // retirer un collaboratuer a une  equipe
 
     public boolean retirerCollaborateur(String identifiant, Long idEquipe) {
 
@@ -137,7 +139,7 @@ public class EquipeService {
 
             if (collaborateur == null) {
                 em.getTransaction().rollback();
-                System.out.println("Erreur : collaborateur introuvable.");
+                System.out.println("Erreur : collaboteur introuvable.");
                 return false;
             }
 
@@ -168,18 +170,19 @@ public class EquipeService {
                 em.getTransaction().rollback();
             }
 
-            System.out.println("Erreur lors du retrait du collaborateur.");
+            System.out.println("Retrait du collabo impossible.");
             return false;
 
         } finally {
             em.close();
         }
     }
+    // renommer  une  equipe
 
     public boolean renommerEquipe(Long idEquipe, String nouveauNom) {
 
         if (nouveauNom == null || nouveauNom.isBlank()) {
-            System.out.println("Erreur : le nom est obligatoire.");
+            System.out.println("Erreur : il est obligatoir de saisir un nom.");
             return false;
         }
 
@@ -200,9 +203,7 @@ public class EquipeService {
 
             Long nombre = em.createQuery(
                             "SELECT COUNT(e) FROM Equipe e " +
-                                    "WHERE LOWER(e.nom) = LOWER(:nom) AND e.id <> :id",
-                            Long.class
-                    )
+                                    "WHERE LOWER(e.nom) = LOWER(:nom) AND e.id <> :id", Long.class)
                     .setParameter("nom", nouveauNom)
                     .setParameter("id", idEquipe)
                     .getSingleResult();
@@ -232,7 +233,7 @@ public class EquipeService {
             em.close();
         }
     }
-
+// Supp une equipe
     public boolean supprimerEquipe(Long idEquipe) {
 
         EntityManager em = fabrique.createEntityManager();
@@ -249,18 +250,14 @@ public class EquipeService {
             }
 
             Long effectif = em.createQuery(
-                            "SELECT COUNT(c) FROM Collaborateur c " +
-                                    "WHERE c.equipe.id = :idEquipe",
-                            Long.class
-                    )
+                            "SELECT COUNT(c) FROM Collaborateur c "
+                                    + "WHERE c.equipe.id = :idEquipe", Long.class)
                     .setParameter("idEquipe", idEquipe)
                     .getSingleResult();
 
             if (effectif > 0) {
                 em.getTransaction().rollback();
-                System.out.println(
-                        "Suppression refusée : l'équipe contient encore des collaborateurs."
-                );
+                System.out.println("Suppression refusée : l'équipe n'est pas vide");
                 return false;
             }
 
@@ -284,7 +281,7 @@ public class EquipeService {
         }
     }
 
-
+// Afficher les membres d'une equipe
     public void afficherMembresEquipe(Long idEquipe) {
 
         EntityManager em = fabrique.createEntityManager();
@@ -300,21 +297,15 @@ public class EquipeService {
             List<Collaborateur> membres = em.createQuery(
                             "SELECT c FROM Collaborateur c " +
                                     "WHERE c.equipe.id = :idEquipe ORDER BY c.prenom",
-                            Collaborateur.class
-                    )
-                    .setParameter("idEquipe", idEquipe)
-                    .getResultList();
+                            Collaborateur.class).setParameter("idEquipe", idEquipe).getResultList();
 
             System.out.println("\nÉquipe : " + equipe.getNom());
 
             if (membres.isEmpty()) {
-                System.out.println("Aucun collaborateur dans cette équipe.");
+                System.out.println("Aucun collaborateur n'est  dans cette équipe.");
             } else {
                 for (Collaborateur c : membres) {
-                    System.out.println(
-                            "Identifiant : " + c.getIdentifiant()
-                                    + " | Prénom : " + c.getPrenom()
-                    );
+                    System.out.println("Identifiant : " + c.getIdentifiant() + " | Prénom : " + c.getPrenom());
                 }
             }
 
@@ -323,7 +314,7 @@ public class EquipeService {
         }
     }
 
-
+// afficher les sans equipes
     public void afficherCollaborateursSansEquipe() {
 
         EntityManager em = fabrique.createEntityManager();
@@ -331,9 +322,7 @@ public class EquipeService {
         try {
             List<Collaborateur> collaborateurs = em.createQuery(
                     "SELECT c FROM Collaborateur c " +
-                            "WHERE c.equipe IS NULL ORDER BY c.nom, c.prenom",
-                    Collaborateur.class
-            ).getResultList();
+                            "WHERE c.equipe IS NULL ORDER BY c.nom, c.prenom", Collaborateur.class).getResultList();
 
             if (collaborateurs.isEmpty()) {
                 System.out.println("Tous les collaborateurs ont une équipe.");
@@ -341,10 +330,7 @@ public class EquipeService {
                 System.out.println("\n=== Collaborateurs sans équipe ===");
 
                 for (Collaborateur c : collaborateurs) {
-                    System.out.println(
-                            "- " + c.getIdentifiant()
-                                    + " | " + c.getPrenom()
-                                    + " " + c.getNom()
+                    System.out.println("- " + c.getIdentifiant() + " : " + c.getPrenom() + " " + c.getNom()
                     );
                 }
             }

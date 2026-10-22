@@ -40,7 +40,7 @@ public class HelloEfrei {
                 switch (choix) {
                     case 0 -> System.out.println("À bientôt !");
 
-                    case 1 -> afficherListe(annuaire.tous());
+                    case 1 -> afficherListe(collaborateurService.tous());
 
                     case 2 -> {
                         System.out.print("Fragment de nom : ");

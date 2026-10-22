@@ -1,10 +1,11 @@
 # JOURNAL DE PROJET — EFREIForge
 
 **Formation :** EFREI — LSI1   
-**Projet Final:** EFREIForge  
-**Membres du binôme :** MALKI Ilyes et AKUGBE Stephen
+**Projet Final:** EFREIForge
 
----
+MALKI Ilyes et AKUGBE Stephen
+
+
 
 ## 1. Démarche et organisation du travail
 
@@ -86,12 +87,12 @@ Ouvrir le projet Maven dans l'IDE, puis lancer la classe principale `HelloEfrei`
 
 ## 5. Contribution de chacun
 
-**Ilyes Malki : - Modifictaion lié au Menu d'HelloEfrei et ajout du menu gestion d'équipe.
+Ilyes Malki : - Modifictaion lié au Menu d'HelloEfrei et ajout du menu gestion d'équipe.
                 - Fichier sql
-                
+                - Modification des classe Collaborateur, testeur et Programmeur a la suite des nouvelle fonctionalité                
                 
 
-** Stephen Akugbe : - Classe EquipeService
+Stephen Akugbe : - Classe EquipeService
                     - CLasse Equipe
 
 Nous avons effectuer l'integration du projet tout au long de sa conception grace a GitHub.

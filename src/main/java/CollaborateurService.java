@@ -50,4 +50,19 @@ public class CollaborateurService {
         }
     }
 
+// Affiche les collabo de la bdd
+    public java.util.List<Collaborateur> tous() {
+        EntityManager em = fabrique.createEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT c FROM Collaborateur c ORDER BY c.nom, c.prenom",
+                    Collaborateur.class
+            ).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
