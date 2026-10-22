@@ -21,7 +21,7 @@ public class HelloEfrei {
 
         CollaborateurService collaborateurService = new CollaborateurService(fabrique);
 
-        // --- Initialisation de l'annuaire avec les données de démonstration ---
+
         Annuaire annuaire = new Annuaire();
         for (Collaborateur c : DonneesDemo.creerCollaborateurs()) {
             annuaire.ajouter(c);
@@ -35,7 +35,7 @@ public class HelloEfrei {
 
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
-                scanner.nextLine(); // consommer le saut de ligne résiduel
+                scanner.nextLine();
 
                 switch (choix) {
                     case 0 -> System.out.println("À bientôt !");
