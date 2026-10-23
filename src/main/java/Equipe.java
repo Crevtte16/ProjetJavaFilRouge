@@ -13,29 +13,35 @@ public class Equipe {
     private Long id;
 
     private String nom;
-
+// pour la jpa
     protected Equipe() {
-        // Constructeur nécessaire pour JPA
+
     }
 
     public Equipe(String nom) {
+
+
         this.nom = nom;
     }
 
     public Long getId() {
         return id;
     }
-
     public String getNom() {
         return nom;
     }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+
     @Override
     public String toString() {
-        return "Equipe{id=" + id + ", nom='" + nom + "'}";
+        return "Equipe{" +
+                "id=" + id + ""
+                + ", nom='" + nom + "'}";
+
     }
+
+
 }

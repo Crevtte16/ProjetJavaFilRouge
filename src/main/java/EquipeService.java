@@ -11,7 +11,7 @@ public class EquipeService {
         this.fabrique = fabrique;
     }
 
-    // Classes du menu Gestion equipe
+    // methodes du menu Gestion equipe
 
     // Afficher les equipes
 
@@ -20,10 +20,8 @@ public class EquipeService {
         EntityManager em = fabrique.createEntityManager();
 
         try {
-            return em.createQuery(
-                    "SELECT e FROM Equipe e ORDER BY e.nom",
-                    Equipe.class
-            ).getResultList();
+
+            return em.createQuery("SELECT e FROM Equipe e ORDER BY e.nom", Equipe.class).getResultList();
         } finally {
             em.close();
         }
@@ -36,39 +34,38 @@ public class EquipeService {
             System.out.println("Erreur : le nom de l'équipe est obligatoire.");
             return false;
         }
-
         EntityManager em = fabrique.createEntityManager();
 
-        try {
-            em.getTransaction().begin();
-
+        try {em.getTransaction().begin();
             Long nombre = em.createQuery(
-                            "SELECT COUNT(e) FROM Equipe e WHERE LOWER(e.nom) = LOWER(:nom)", Long.class).setParameter("nom", nom.trim()).getSingleResult();
+                            "SELECT COUNT(e) " +
+                                    "FROM Equipe e WHERE LOWER(e.nom) = LOWER(:nom)", Long.class)
+                                    .setParameter("nom", nom.trim()).getSingleResult();
 
-            if (nombre > 0) {
-                em.getTransaction().rollback();
+            if (nombre > 0) {em.getTransaction().rollback();
+
                 System.out.println("Impossible, il y a deja un equipe avec ce nom");
-                return false;
-            }
+                return false;}
 
             Equipe equipe = new Equipe(nom.trim());
             em.persist(equipe);
-
             em.getTransaction().commit();
-
             System.out.println("Équipe ajoutée avec succès!");
+
             return true;
 
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {em.getTransaction().rollback();
+
+
             }
-            System.out.println("Erreur lors de l'ajout de l'équipe.");
+
+            System.out.println("Erreur durant l'ajout de l'équipe.");
             return false;
 
-        } finally {
-            em.close();
-        }
+        } finally {em.close();}
+
+
     }
 
     // affacter un collaboratuer a une  equipe
@@ -79,33 +76,30 @@ public class EquipeService {
         try {
             em.getTransaction().begin();
 
-            Collaborateur collaborateur =
-                    em.find(Collaborateur.class, identifiant);
-
+            Collaborateur collaborateur = em.find(Collaborateur.class, identifiant);
             Equipe equipe = em.find(Equipe.class, idEquipe);
 
-            if (collaborateur == null) {
-                em.getTransaction().rollback();
+
+
+            if (collaborateur == null) { em.getTransaction().rollback();
+
                 System.out.println("Erreur :  ce collaborateur  est introuvable.");
                 return false;
             }
 
-            if (equipe == null) {
-                em.getTransaction().rollback();
+            if (equipe == null) {em.getTransaction().rollback();
+
                 System.out.println("Erreur : l'équipe est introuvable.");
                 return false;
             }
 
-            if (collaborateur.getEquipe() != null) {
-                em.getTransaction().rollback();
-                System.out.println(
-                        "Erreur : ce collaborateur appartient déjà à une équipe."
-                );
-                return false;
-            }
+            if (collaborateur.getEquipe() != null) {em.getTransaction().rollback();
+
+                System.out.println("Erreur : ce collaborateur appartient déjà à une des équipe.");
+
+                return false;}
 
             collaborateur.setEquipe(equipe);
-
             em.getTransaction().commit();
 
             System.out.println("Collaborateur affecter à l'équipe avec succès.");
@@ -190,23 +184,23 @@ public class EquipeService {
 
         EntityManager em = fabrique.createEntityManager();
 
-        try {
-            em.getTransaction().begin();
+        try {em.getTransaction().begin();
 
             Equipe equipe = em.find(Equipe.class, idEquipe);
 
-            if (equipe == null) {
-                em.getTransaction().rollback();
+            if (equipe == null) {em.getTransaction().rollback();
+
                 System.out.println("Erreur : équipe introuvable.");
+
                 return false;
             }
 
             Long nombre = em.createQuery(
                             "SELECT COUNT(e) FROM Equipe e " +
                                     "WHERE LOWER(e.nom) = LOWER(:nom) AND e.id <> :id", Long.class)
-                    .setParameter("nom", nouveauNom)
-                    .setParameter("id", idEquipe)
-                    .getSingleResult();
+                            .setParameter("nom", nouveauNom)
+                            .setParameter("id", idEquipe)
+                            .getSingleResult();
 
             if (nombre > 0) {
                 em.getTransaction().rollback();
@@ -222,14 +216,13 @@ public class EquipeService {
             return true;
 
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
+            if (em.getTransaction().isActive()) {em.getTransaction().rollback();}
 
             System.out.println("Erreur lors du renommage de l'équipe.");
             return false;
 
-        } finally {
+        }
+        finally {
             em.close();
         }
     }
@@ -238,14 +231,14 @@ public class EquipeService {
 
         EntityManager em = fabrique.createEntityManager();
 
-        try {
-            em.getTransaction().begin();
+        try {em.getTransaction().begin();
 
             Equipe equipe = em.find(Equipe.class, idEquipe);
 
             if (equipe == null) {
                 em.getTransaction().rollback();
                 System.out.println("Erreur : équipe introuvable.");
+
                 return false;
             }
 
@@ -255,9 +248,9 @@ public class EquipeService {
                     .setParameter("idEquipe", idEquipe)
                     .getSingleResult();
 
-            if (effectif > 0) {
-                em.getTransaction().rollback();
-                System.out.println("Suppression refusée : l'équipe n'est pas vide");
+            if (effectif > 0) {em.getTransaction().rollback();
+
+                System.out.println("Suppression refusée : l'équipe n'est pas vide!!");
                 return false;
             }
 
@@ -265,7 +258,7 @@ public class EquipeService {
 
             em.getTransaction().commit();
 
-            System.out.println("Équipe supprimée avec succès.");
+            System.out.println("Équipe supprimée");
             return true;
 
         } catch (Exception e) {
@@ -273,7 +266,8 @@ public class EquipeService {
                 em.getTransaction().rollback();
             }
 
-            System.out.println("Erreur lors de la suppression de l'équipe.");
+            System.out.println("Erreur lors de la suppression d'équipe.");
+
             return false;
 
         } finally {
@@ -330,10 +324,14 @@ public class EquipeService {
                 System.out.println("\n=== Collaborateurs sans équipe ===");
 
                 for (Collaborateur c : collaborateurs) {
-                    System.out.println("- " + c.getIdentifiant() + " : " + c.getPrenom() + " " + c.getNom()
-                    );
+                    System.out.println("- " + c.getIdentifiant()
+                            + " : " + c.getPrenom() +
+                            " " + c.getNom());
                 }
             }
+
+
+
 
         } finally {
             em.close();

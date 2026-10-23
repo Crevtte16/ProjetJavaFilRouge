@@ -218,6 +218,7 @@ public class HelloEfrei {
                                             );
                                         } else {
                                             System.out.println("Identifiant d'équipe invalide.");
+
                                             scanner.nextLine();
                                         }
                                     }
@@ -259,11 +260,10 @@ public class HelloEfrei {
                                         if (scanner.hasNextLong()) {
                                             Long idEquipe = scanner.nextLong();
                                             scanner.nextLine();
-
                                             equipeService.afficherMembresEquipe(idEquipe);
 
-                                        } else {
-                                            System.out.println("Identifiant invalide.");
+                                        } else {System.out.println("Identifiant invalide.");
+
                                             scanner.nextLine();
                                         }
                                     }

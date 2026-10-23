@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS efreiforge
 
 USE efreiforge;
 
--- 1. Table des adresses
+-- Table  adresses
 CREATE TABLE IF NOT EXISTS adresse (
                                        id BIGINT NOT NULL AUTO_INCREMENT,
                                        rue VARCHAR(255),
@@ -15,17 +15,17 @@ CREATE TABLE IF NOT EXISTS adresse (
     PRIMARY KEY (id)
     ) ENGINE=InnoDB;
 
--- 2. Table des équipes
+--  Table  équipes
 CREATE TABLE IF NOT EXISTS equipe (
                                       id BIGINT NOT NULL AUTO_INCREMENT,
                                       nom VARCHAR(255),
     PRIMARY KEY (id)
     ) ENGINE=InnoDB;
 
--- 3. Table des collaborateurs
--- L'héritage JPA utilise par défaut une table commune.
+--  Table  collaborateurs
+
 CREATE TABLE IF NOT EXISTS collaborateur (
-                                             identifiant VARCHAR(255) NOT NULL,
+    identifiant VARCHAR(255) NOT NULL,
     prenom VARCHAR(255),
     nom VARCHAR(255),
     salaire DOUBLE,
@@ -39,9 +39,10 @@ CREATE TABLE IF NOT EXISTS collaborateur (
     FOREIGN KEY (adresse_id) REFERENCES adresse(id),
     CONSTRAINT fk_collaborateur_equipe
     FOREIGN KEY (equipe_id) REFERENCES equipe(id)
-    ) ENGINE=InnoDB;
+    )
+    ENGINE=InnoDB;
 
--- 4. Insérer les adresses
+--  Insérer l'adresses
 INSERT INTO adresse (id, rue, code_postal, ville, pays)
 VALUES
     (1, '12 rue des Lilas', '75000', 'Paris', 'France'),
@@ -56,7 +57,7 @@ VALUES
                          ville = VALUES(ville),
                          pays = VALUES(pays);
 
--- 5. Insérer les équipes
+--  Insérer équipes
 INSERT INTO equipe (id, nom)
 VALUES
     (1, 'Développement'),
@@ -64,31 +65,31 @@ VALUES
     ON DUPLICATE KEY UPDATE
                          nom = VALUES(nom);
 
--- 6. Insérer les collaborateurs
--- C001 et C002 : Développement
+-- Insérer les collab d'emples
+-- C001 et C002 : Dév
 -- C003 et C004 : Tests
--- C005 et C006 : sans équipe
+-- C005 et C006 : reserve
 
 INSERT INTO collaborateur
 (identifiant, prenom, nom, salaire, DTYPE,
  langage_prefere, adresse_id, equipe_id)
 VALUES
-    ('C001', 'Alice', 'Martin', 42000, 'Programmeur',
+    ('C001', 'Ilyes', 'Malki', 42000, 'Programmeur',
      'Java', 1, 1),
 
-    ('C002', 'Bob', 'Dupont', 38000, 'Testeur',
+    ('C002', 'Ayoub', 'Touil', 38000, 'Testeur',
      NULL, 2, 1),
 
-    ('C003', 'Clara', 'Bernard', 45000, 'Programmeur',
+    ('C003', 'Jaja', 'Ahraoui', 45000, 'Programmeur',
      'Python', 3, 2),
 
-    ('C004', 'David', 'Moreau', 39000, 'Testeur',
+    ('C004', 'Pablo', 'Sousa', 39000, 'Testeur',
      NULL, 4, 2),
 
-    ('C005', 'Emma', 'Simon', 47000, 'Programmeur',
+    ('C005', 'Steph', 'Akugbe', 47000, 'Programmeur',
      'JavaScript', 5, NULL),
 
-    ('C006', 'Hugo', 'Petit', 40000, 'Testeur',
+    ('C006', 'Omar', 'Da Fonseca', 40000, 'Testeur',
      NULL, 6, NULL)
 
     ON DUPLICATE KEY UPDATE
